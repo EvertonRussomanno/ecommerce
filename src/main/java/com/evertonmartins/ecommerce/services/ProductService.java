@@ -13,5 +13,7 @@ public interface ProductService {
     Page<ProductDTO> findAll(Pageable pageable);
     ProductDTO findById(Long id);
 
+    ProductDTO insert(ProductDTO productDTO);
+
 
 }

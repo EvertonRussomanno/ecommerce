@@ -36,4 +36,17 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO productDTO = new ProductDTO(product);
         return productDTO;
     }
+
+    @Override
+    @Transactional
+    public ProductDTO insert(ProductDTO productDTO) {
+        Product entity = new Product();
+        entity.setName(productDTO.getName());
+        entity.setDescription(productDTO.getDescription());
+        entity.setPrice(productDTO.getPrice());
+        entity.setImgUrl(productDTO.getImgUrl());
+
+        productRepository.save(entity);
+        return new ProductDTO(entity);
+    }
 }
