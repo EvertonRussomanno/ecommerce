@@ -4,14 +4,13 @@ import com.evertonmartins.ecommerce.dto.ProductDTO;
 import com.evertonmartins.ecommerce.entities.Product;
 import com.evertonmartins.ecommerce.repositories.ProductRepository;
 import com.evertonmartins.ecommerce.services.ProductService;
+import com.evertonmartins.ecommerce.services.exceptions.ResourceNotFoudException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,10 +30,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
-        Optional<Product> result = productRepository.findById(id);
-        Product product = result.get();
-        ProductDTO productDTO = new ProductDTO(product);
-        return productDTO;
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoudException("Resource not found!"));
+//        Product product = result.get();
+//        ProductDTO productDTO = new ProductDTO(product);
+        return new ProductDTO(product);
     }
 
     @Override
