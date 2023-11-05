@@ -1,14 +1,23 @@
 # Compiled class file
 *.class
 
+/node_modules
 # Log file
 *.log
+
+# SSH Keys
+
+*.pem
+*.ppk
 
 # BlueJ files
 *.ctxt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+
+# Merge Files
+*.bak
 
 # Package Files #
 *.jar
@@ -22,3 +31,24 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+#Eclipse files
+**/.project
+**/.classpath
+**/.settings/
+/bin/
+blog/bin/
+**/.tern-project
+**/.factorypath
+
+#IntelliJ files
+**/*.iml
+**/.idea
+**/.gradle
+
+#Other Files
+*.ini
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+/.metadata/
