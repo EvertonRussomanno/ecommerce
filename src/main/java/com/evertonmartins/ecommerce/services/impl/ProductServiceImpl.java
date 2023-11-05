@@ -55,6 +55,12 @@ public class ProductServiceImpl implements ProductService {
         return new ProductDTO(entity);
     }
 
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        productRepository.deleteById(id);
+    }
+
     private void copyDtoToEntity(ProductDTO productDTO, Product entity) {
         entity.setName(productDTO.getName());
         entity.setDescription(productDTO.getDescription());
