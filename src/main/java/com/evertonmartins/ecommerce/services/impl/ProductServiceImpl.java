@@ -4,14 +4,16 @@ import com.evertonmartins.ecommerce.dto.ProductDTO;
 import com.evertonmartins.ecommerce.entities.Product;
 import com.evertonmartins.ecommerce.repositories.ProductRepository;
 import com.evertonmartins.ecommerce.services.ProductService;
+import com.evertonmartins.ecommerce.services.exceptions.DatabaseException;
 import com.evertonmartins.ecommerce.services.exceptions.ResourceNotFoudException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -31,8 +33,6 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoudException("Resource not found!"));
-//        Product product = result.get();
-//        ProductDTO productDTO = new ProductDTO(product);
         return new ProductDTO(product);
     }
 
@@ -48,16 +48,28 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductDTO update(Long id, ProductDTO productDTO) {
-        Product entity = productRepository.getReferenceById(id);
-        copyDtoToEntity(productDTO, entity);
-        productRepository.save(entity);
-        return new ProductDTO(entity);
+        try {
+            Product entity = productRepository.getReferenceById(id);
+            copyDtoToEntity(productDTO, entity);
+            productRepository.save(entity);
+            return new ProductDTO(entity);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFoudException("Resouce not found!");
+        }
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
-        productRepository.deleteById(id);
+        if (!productRepository.existsById(id)){
+            throw new ResourceNotFoudException("Resource not found!");
+        }
+        try {
+            productRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Integrity database fail!");
+        }
+
     }
 
     private void copyDtoToEntity(ProductDTO productDTO, Product entity) {
