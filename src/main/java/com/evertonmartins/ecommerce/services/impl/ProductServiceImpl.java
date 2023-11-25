@@ -21,12 +21,19 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+//        Page<Product> list = productRepository.findAll(pageable);
+//        return list.map(x -> new ProductDTO(x));
+
+//    }
+
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        Page<Product> list = productRepository.findAll(pageable);
+    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+        Page<Product> list = productRepository.searchByName(name, pageable);
         return list.map(x -> new ProductDTO(x));
-
     }
 
     @Override
