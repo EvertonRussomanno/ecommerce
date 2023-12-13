@@ -1,7 +1,9 @@
 package com.evertonmartins.ecommerce.services.impl;
 
+import com.evertonmartins.ecommerce.dto.CategoryDTO;
 import com.evertonmartins.ecommerce.dto.ProductDTO;
 import com.evertonmartins.ecommerce.dto.ProductMinDTO;
+import com.evertonmartins.ecommerce.entities.Category;
 import com.evertonmartins.ecommerce.entities.Product;
 import com.evertonmartins.ecommerce.repositories.ProductRepository;
 import com.evertonmartins.ecommerce.services.ProductService;
@@ -85,5 +87,12 @@ public class ProductServiceImpl implements ProductService {
         entity.setDescription(productDTO.getDescription());
         entity.setPrice(productDTO.getPrice());
         entity.setImgUrl(productDTO.getImgUrl());
+
+        entity.getCategories().clear();
+        for (CategoryDTO catDTO : productDTO.getCategories()){
+            Category cat = new Category();
+            cat.setId(catDTO.getId());
+            entity.getCategories().add(cat);
+        }
     }
 }
