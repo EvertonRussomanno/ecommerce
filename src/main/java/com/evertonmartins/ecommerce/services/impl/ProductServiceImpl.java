@@ -1,6 +1,7 @@
 package com.evertonmartins.ecommerce.services.impl;
 
 import com.evertonmartins.ecommerce.dto.ProductDTO;
+import com.evertonmartins.ecommerce.dto.ProductMinDTO;
 import com.evertonmartins.ecommerce.entities.Product;
 import com.evertonmartins.ecommerce.repositories.ProductRepository;
 import com.evertonmartins.ecommerce.services.ProductService;
@@ -31,9 +32,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
         Page<Product> list = productRepository.searchByName(name, pageable);
-        return list.map(x -> new ProductDTO(x));
+        return list.map(x -> new ProductMinDTO(x));
     }
 
     @Override
