@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(entity);
             return new ProductDTO(entity);
         }catch (EntityNotFoundException e){
-            throw new ResourceNotFoudException("Resouce not found!");
+            throw new ResourceNotFoudException("Resource not found!");
         }
     }
 

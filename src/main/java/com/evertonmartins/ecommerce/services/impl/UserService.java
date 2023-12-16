@@ -1,4 +1,4 @@
-package com.evertonmartins.ecommerce.services;
+package com.evertonmartins.ecommerce.services.impl;
 
 
 import com.evertonmartins.ecommerce.dto.UserDTO;
