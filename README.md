@@ -14,7 +14,7 @@
 
 #### Login: {{host}}/oauth2/token
 
-##Products:
+## Products:
 #### findAll: {{host}}/products
 #### findById: {{host}}/products/{id}
 #### insert: {{host}}/products
@@ -52,5 +52,9 @@
 }
 ````
 #### delete: {{host}}/products/{id}
+
+## Orders:
+
+#### findById: {{host}}/orders/{id}
 
 # Em construção...
